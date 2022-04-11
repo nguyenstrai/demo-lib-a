@@ -9,11 +9,7 @@ def call(body){
     Compile compile = new Compile(this)
 
     pipeline{
-        agent{
-            node{
-                label "master"
-            }
-        }
+        agent any
 
         stages{
             stage("Display"){
