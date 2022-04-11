@@ -11,7 +11,7 @@ def call(body){
     pipeline{
         agent{
             node{
-                label "somenode"
+                label "master"
             }
         }
 
@@ -29,7 +29,7 @@ def call(body){
         post{
             always{
                 script{
-
+                    echo "post step"
                 }
             }
         }
