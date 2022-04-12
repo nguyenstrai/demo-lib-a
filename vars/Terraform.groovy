@@ -13,7 +13,10 @@ def call(body){
             stage("Checkout"){
                 steps{
                     script{
-                        git (branch: 'main', credentialsId: 'github-http-creds', url: 'https://github.com/nguyenstrai/learn_terraform.git')
+                        //git (branch: 'main', credentialsId: 'github-http-creds', url: 'https://github.com/nguyenstrai/learn_terraform.git')
+                        sh "git clone git@github.com:nguyenstrai/learn_terraform.git"
+                        env.WORKSPACE = "${env.WORKSPACE}/learn_terraform"
+                        echo(env.WORKSPACE)
                     }
                 }
             }
@@ -42,7 +45,7 @@ def call(body){
             stage("Plan"){
                 steps{
                     script{
-                        echo ("plan coming soon")
+                        sh "terraform plan"
                     }
                 }
             }
