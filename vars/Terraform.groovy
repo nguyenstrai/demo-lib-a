@@ -13,8 +13,8 @@ def call(body){
             stage("Checkout"){
                 steps{
                     script{
-                        //git (branch: 'main', credentialsId: 'github-http-creds', url: 'https://github.com/nguyenstrai/learn_terraform.git')
-                        bat "git clone git@github.com:nguyenstrai/learn_terraform.git"
+                        git (branch: 'main', credentialsId: 'github-creds', url: 'git@github.com:nguyenstrai/learn_terraform.git')
+                        /*bat "git clone git@github.com:nguyenstrai/learn_terraform.git"*/
                         env.WORKSPACE = "${env.WORKSPACE}/learn_terraform"
                         echo(env.WORKSPACE)
                     }
