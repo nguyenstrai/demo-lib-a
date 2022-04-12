@@ -23,7 +23,7 @@ def call(body){
             stage("Setup AWS workspace"){
                 steps{
                     script{
-                        def commandOuput = bat (command: "aws assume-role --role-arn 'arn:aws:iam::432276108419:role/demo-admin-role' --session-name 'jenkins' ", returnStdOut: true)
+                        def commandOuput = bat (command: "aws assume-role --role-arn 'arn:aws:iam::432276108419:role/demo-admin-role' --session-name 'jenkins' ", returnStdout: true)
                         def json = readJSON (text: commandOuput)
                         def accessKeyId = json.Credentials.AccessKeyId
                         def sessionToken = json.Credentials.SessionToken
