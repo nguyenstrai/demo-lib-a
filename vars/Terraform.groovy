@@ -42,7 +42,7 @@ def call(body){
             stage("Plan"){
                 steps{
                     script{
-                        //run terraform plan
+                        echo ("plan coming soon")
                     }
                 }
             }
@@ -57,8 +57,7 @@ def call(body){
                             }
                         }
 
-                       //ask user to approve the plan
-                        // based on the user input run apply.
+                       echo ("apply coming soon")
                     }
                 }
             }
