@@ -14,16 +14,16 @@ def call(body){
                 steps{
                     script{
                         //git (branch: 'main', credentialsId: 'github-http-creds', url: 'https://github.com/nguyenstrai/learn_terraform.git')
-                        sh "git clone git@github.com:nguyenstrai/learn_terraform.git"
-                        /*env.WORKSPACE = "${env.WORKSPACE}/learn_terraform"
-                        echo(env.WORKSPACE)*/
+                        bat "git clone git@github.com:nguyenstrai/learn_terraform.git"
+                        env.WORKSPACE = "${env.WORKSPACE}/learn_terraform"
+                        echo(env.WORKSPACE)
                     }
                 }
             }
             stage("Setup AWS workspace"){
                 steps{
                     script{
-                        def commandOuput = sh (command: "aws assume-role --role-arn 'arn:aws:iam::432276108419:role/demo-admin-role' --session-name 'jenkins' ", returnStdOut: true)
+                        def commandOuput = bat (command: "aws assume-role --role-arn 'arn:aws:iam::432276108419:role/demo-admin-role' --session-name 'jenkins' ", returnStdOut: true)
                         def json = readJSON (text: commandOuput)
                         def accessKeyId = json.Credentials.AccessKeyId
                         def sessionToken = json.Credentials.SessionToken
@@ -38,14 +38,14 @@ def call(body){
             stage("Init"){
                 steps{
                     script{
-                        sh "terraform init"
+                        bat "terraform init"
                     }
                 }
             }
             stage("Plan"){
                 steps{
                     script{
-                        sh "terraform plan"
+                        bat "terraform plan"
                     }
                 }
             }
