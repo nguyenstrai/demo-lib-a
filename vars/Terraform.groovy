@@ -15,8 +15,8 @@ def call(body){
                     script{
                         //git (branch: 'main', credentialsId: 'github-http-creds', url: 'https://github.com/nguyenstrai/learn_terraform.git')
                         sh "git clone git@github.com:nguyenstrai/learn_terraform.git"
-                        env.WORKSPACE = "${env.WORKSPACE}/learn_terraform"
-                        echo(env.WORKSPACE)
+                        /*env.WORKSPACE = "${env.WORKSPACE}/learn_terraform"
+                        echo(env.WORKSPACE)*/
                     }
                 }
             }
