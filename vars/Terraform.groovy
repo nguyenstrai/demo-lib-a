@@ -6,17 +6,59 @@ def call(body){
     body.delegate = config
     body()
 
-    Compile compile = new Compile(this)
-
     pipeline{
         agent any
 
         stages{
-            stage("Display"){
+            stage("Checkout"){
                 steps{
                     script{
-                        echo "Hello World"
-                        compile.run()
+                        git (branch: 'main', credentialsId: 'github-http-creds', url: 'https://github.com/nguyenstrai/learn_terraform.git')
+                    }
+                }
+            }
+            stage("Setup AWS workspace"){
+                steps{
+                    script{
+                        def commandOuput = sh (command: "aws assume-role --role-arn 'arn:aws:iam::432276108419:role/demo-admin-role' --session-name 'jenkins' ", returnStdOut: true)
+                        def json = readJSON (text: commandOuput)
+                        def accessKeyId = json.Credentials.AccessKeyId
+                        def sessionToken = json.Credentials.SessionToken
+                        def secretKey = json.Credentials.SecretAccessKey
+
+                        env.AWS_ACCESS_KEY_ID = accessKeyId
+                        env.AWS_SECRET_ACCESS_KEY = secretKey
+                        env.AWS_SESSION_TOKEN = sessionToken
+                    }
+                }
+            }
+            stage("Init"){
+                steps{
+                    script{
+                        sh "terraform init"
+                    }
+                }
+            }
+            stage("Plan"){
+                steps{
+                    script{
+                        //run terraform plan
+                    }
+                }
+            }
+            stage("Apply"){
+                steps{
+                    script{
+
+                        when {
+                            expression {
+                                input message: "Do you approve the plan?"
+                                return true
+                            }
+                        }
+
+                       //ask user to approve the plan
+                        // based on the user input run apply.
                     }
                 }
             }
