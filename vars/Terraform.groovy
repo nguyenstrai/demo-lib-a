@@ -23,10 +23,15 @@ def call(body){
             stage("Setup AWS workspace"){
                 steps{
                     script{
+
+                        withAWS(roleAccount:'432276108419', role:'arn:aws:iam::432276108419:role/demo-admin-role') {
+                            sh 'aws s3 ls'
+                        }
+
                         def commandOutput = bat (script: "aws sts assume-role --role-arn arn:aws:iam::432276108419:role/demo-admin-role --role-session-name jenkins  ", returnStdout: true)
                         echo(commandOutput)
                         writeFile(file: "assumerole.json", text: commandOutput, encoding: "UTF-8")
-                        def json = readJSON(text:  readFile("assumerole.json").trim())
+                        def json = readJSON(file: "assumerole.json")
                         def accessKeyId = json.Credentials.AccessKeyId
                         def sessionToken = json.Credentials.SessionToken
                         def secretKey = json.Credentials.SecretAccessKey
