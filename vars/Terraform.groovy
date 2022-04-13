@@ -20,35 +20,23 @@ def call(body){
                     }
                 }
             }
-            stage("Setup AWS workspace"){
-                steps{
-                    script{
-                        def commandOutput = bat (script: "aws sts assume-role --role-arn arn:aws:iam::432276108419:role/demo-admin-role --role-session-name jenkins  ", returnStdout: true)
-                        echo(commandOutput)
-
-                        writeFile(file: "assumerole.json", text: commandOutput, encoding: "UTF-8")
-                        def json = readJSON(file: "assumerole.json")
-                        def accessKeyId = json.Credentials.AccessKeyId
-                        def sessionToken = json.Credentials.SessionToken
-                        def secretKey = json.Credentials.SecretAccessKey
-
-                        env.AWS_ACCESS_KEY_ID = accessKeyId
-                        env.AWS_SECRET_ACCESS_KEY = secretKey
-                        env.AWS_SESSION_TOKEN = sessionToken
-                    }
-                }
-            }
             stage("Init"){
                 steps{
                     script{
-                        bat "terraform init"
+                        withAWS(roleAccount:'432276108419', role:'arn:aws:iam::432276108419:role/demo-admin-role') {
+                            bat "terraform init"
+                        }
+
                     }
                 }
             }
             stage("Plan"){
                 steps{
                     script{
-                        bat "terraform plan"
+
+                        withAWS(roleAccount:'432276108419', role:'arn:aws:iam::432276108419:role/demo-admin-role') {
+                            bat "terraform plan"
+                        }
                     }
                 }
             }
