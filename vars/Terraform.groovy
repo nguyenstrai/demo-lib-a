@@ -24,6 +24,7 @@ def call(body){
                 steps{
                     script{
                         def commandOuput = bat (script: "aws sts assume-role --role-arn arn:aws:iam::432276108419:role/demo-admin-role --role-session-name jenkins  ", returnStdout: true)
+                        echo(commandOuput)
                         def json = readJSON (text: commandOuput)
                         def accessKeyId = json.Credentials.AccessKeyId
                         def sessionToken = json.Credentials.SessionToken
