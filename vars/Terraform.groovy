@@ -30,9 +30,8 @@ def call(body){
             stage("Plan"){
                 steps{
                     script{
-
                         withAWS(roleAccount:'432276108419', role:'arn:aws:iam::432276108419:role/demo-admin-role') {
-                            bat """terraform plan -var ec2_instance_type="t2.micro" """
+                            bat """terraform plan -var ec2_instance_type="${env.INSTANCE_TYPE}" """
                         }
                     }
                 }
