@@ -38,16 +38,15 @@ def call(body){
                 }
             }
             stage("Apply"){
+                when {
+                    expression {
+                        input message: "Do you approve the plan?"
+                        return true
+                    }
+                }
+
                 steps{
                     script{
-
-                        when {
-                            expression {
-                                input message: "Do you approve the plan?"
-                                return true
-                            }
-                        }
-
                        echo ("apply coming soon")
                     }
                 }
