@@ -20,7 +20,7 @@ def call(body){
             stage("Init"){
                 steps{
                     script{
-                        withAWS(roleAccount:'432276108419', role:'arn:aws:iam::432276108419:role/demo-admin-role') {
+                        withAWS(roleAccount:'992247318733', role:'arn:aws:iam::992247318733:role/demo-admin-role') {
                             bat """terraform init  """
                         }
 
@@ -30,7 +30,7 @@ def call(body){
             stage("Plan"){
                 steps{
                     script{
-                        withAWS(roleAccount:'432276108419', role:'arn:aws:iam::432276108419:role/demo-admin-role') {
+                        withAWS(roleAccount:'992247318733', role:'arn:aws:iam::992247318733:role/demo-admin-role') {
                             bat """terraform plan -var ec2_instance_type="${env.INSTANCE_TYPE}" """
                         }
                     }
