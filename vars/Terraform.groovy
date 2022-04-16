@@ -62,10 +62,10 @@ def call(body){
                         dir("${env.WORKSPACE}/envs/develop"){
                             withAWS(roleAccount:'992247318733', role:'arn:aws:iam::992247318733:role/demo-admin-role',credentials:'aws-user-jenkins') {
                             if (isUnix()){
-                                sh """terraform apply -var ec2_instance_type="${env.INSTANCE_TYPE}"  -var ec2_tag="${env.EC2_TAG}" -var key_name="${env.KEY_NAME}" -var environment="${env.ENVIRONMENT}" """
+                                sh """terraform apply -var ec2_instance_type="${env.INSTANCE_TYPE}"  -var ec2_tag="${env.EC2_TAG}" -var key_name="${env.KEY_NAME}" -var environment="${env.ENVIRONMENT}" -auto-approve """
                             }
                             else{
-                                bat """terraform apply -var ec2_instance_type="${env.INSTANCE_TYPE}"  -var ec2_tag="${env.EC2_TAG}" -var key_name="${env.KEY_NAME}" -var environment="${env.ENVIRONMENT}" """
+                                bat """terraform apply -var ec2_instance_type="${env.INSTANCE_TYPE}"  -var ec2_tag="${env.EC2_TAG}" -var key_name="${env.KEY_NAME}" -var environment="${env.ENVIRONMENT}" -auto-approve """
                             }                            
                            }
                         }
