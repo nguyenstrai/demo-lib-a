@@ -21,7 +21,12 @@ def call(body){
                 steps{
                     script{
                         withAWS(roleAccount:'992247318733', role:'arn:aws:iam::992247318733:role/demo-admin-role',credentials:'aws-user-jenkins') {
-                            bat """terraform init  """
+                            if (isUnix()){
+                                sh """terraform init  """
+                            }
+                            else{
+                                bat """terraform init  """
+                            }
                         }
 
                     }
@@ -31,7 +36,14 @@ def call(body){
                 steps{
                     script{
                         withAWS(roleAccount:'992247318733', role:'arn:aws:iam::992247318733:role/demo-admin-role',credentials:'aws-user-jenkins') {
-                            bat """terraform plan -var ec2_instance_type="${env.INSTANCE_TYPE}" """
+                            if (isUnix()){
+                                sh """terraform plan -var ec2_instance_type="${env.INSTANCE_TYPE}" """
+                            }
+                            else{
+                                bat """terraform plan -var ec2_instance_type="${env.INSTANCE_TYPE}" """
+                            }
+                            
+                            
                         }
                     }
                 }
